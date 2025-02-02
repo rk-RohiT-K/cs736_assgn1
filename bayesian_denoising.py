@@ -156,3 +156,52 @@ class BayesianDenoising:
         if clean_img is not None:
             plt.imsave(os.path.join(save_dir, 'ground_truth.png'), 
                       clean_img, cmap='gray')
+
+from scipy.io import loadmat
+
+if __name__ == '__main__':
+    data_path = '../data/assignmentImageDenoising_brainMRIslice.mat'
+    data = loadmat(data_path)
+    noisy_img = data['brainMRIsliceNoisy']
+    clean_img = data['brainMRIsliceOrig']
+
+    def normalize(img):
+        return (img - np.min(img)) / (np.max(img) - np.min(img))
+
+    noisy_img = normalize(noisy_img)
+    clean_img = normalize(clean_img)
+
+
+    denoiser = BayesianDenoising()
+    print("Original Image RRMSE:", denoiser._calculate_rrmse(clean_img, noisy_img))
+    # You can adjust these parameters
+    denoised_img, objective_values = denoiser.denoise(
+        noisy_img=noisy_img,
+        clean_img=clean_img,  # Optional, only needed if you want to calculate RRMSE
+        prior_type='huber',  # Can be 'quadratic', 'huber', or 'discontinuity_adaptive'
+        alpha= 0.7926919367283951,  # Weight between prior and likelihood (0-1)
+        gamma=0.8*0.005791666666666667,  # Parameter for non-quadratic priors
+        max_iter=150,
+        save_dir='denoising_results_brain'  # Optional, directory to save results
+    )
+
+    # Display results
+    plt.figure(figsize=(15, 5))
+
+    plt.subplot(131)
+    plt.imshow(clean_img, cmap='gray')
+    plt.title('Clean Image')
+    plt.axis('off')
+
+    plt.subplot(132)
+    plt.imshow(noisy_img, cmap='gray')
+    plt.title('Noisy Image')
+    plt.axis('off')
+
+    plt.subplot(133)
+    plt.imshow(denoised_img, cmap='gray')
+    plt.title('Denoised Image')
+    plt.axis('off')
+
+    plt.tight_layout()
+    plt.show()

@@ -1,0 +1,36 @@
+Phantom Image:
+	+++++Quadratic Prior+++++++
+	alpha:0.09918765432098765
+	gamma:2.5e-05
+	+++++++Huber Prior+++++++++
+	alpha:1.0
+	gamma:9.166666666666668e-05
+	++Discountinuity-Adaptive++
+	alpha:1.0
+	gamma:4.722222222222223e-05
+brainMRIL
+	++DA++
+	alpha:0.8737416457094955
+	gamma:0.006563888888888889
+	RMSE:0.11353
+	++huber++
+	alpha:0.7235640527358634
+	gamma:0.016216666666666667
+	RMSE:0.11331443323186302
+	++quadratic++
+	alpha:0.12973333333333334,
+	gamma:5e-05
+	RMSE:0.12233
+RGB Microscopy:
+	++DA++
+	alpha:
+	gamma:
+	RMSE:
+	++huber++
+	alpha:
+	gamma:
+	RMSE:
+	++quadratic++
+	alpha:
+	gamma:
+	RMSE:
